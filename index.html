@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Viewer</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .floating-button {
+            position: fixed;
+          
+            top: 1px;
+           
+            /* Adjust the distance from the bottom as needed */
+            right: 1px;
+            /* Adjust the distance from the right as needed */
+            z-index: 100;
+            /* Ensure it's above other page elements */
+        }
+
+        .floating-button button {
+            background-color: #007bff;
+            /* Change the button's background color */
+            color: #fff;
+            /* Change the button's text color */
+            padding: 20px 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+           
+        }
+        iframe{
+            display: block;
+        }
+
+
+
+        /* Style the header and navigation bar */
+        header {
+            background-color: #d10f0f;
+            color: #fff;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .menu li {
+            margin-right: 20px;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        /* Style the mobile menu toggle button */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu-toggle span {
+            width: 30px;
+            height: 3px;
+            background-color: #ffffff;
+            margin: 3px 0;
+        }
+
+        /* Media query for mobile responsiveness */
+        @media screen and (max-width: 768px) {
+            .menu {
+                display: none;
+                flex-direction: column;
+                background-color: #333;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu.active {
+                display: flex;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="#">Your Logo</a>
+            </div>
+            <ul class="menu">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+    <div class="floating-button">
+        <a href="your-download-link.pdf" download>
+            <button>Download</button>
+        </a>
+    </div>
+
+    <iframe id="pdfViewer" src="https://drive.google.com/file/d/1_gKqazK1uhdgl0UJZXIltmrMojNF8W_B/preview" width="100%"
+        height="700px"></iframe>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const pdfViewer = document.getElementById('pdfViewer');
+
+            pdfViewer.addEventListener('load', function () {
+                const pdfDocument = pdfViewer.contentDocument;
+
+                // Disable all links within the PDF
+                const pdfLinks = pdfDocument.querySelectorAll('a');
+                pdfLinks.forEach(function (link) {
+                    link.addEventListener('click', function (event) {
+                        event.preventDefault();
+                    });
+                });
+            });
+        });
+    </script>
+
+
+
+    <script>
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const menu = document.querySelector('.menu');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+    </script>
+</body>
+
+</html>
